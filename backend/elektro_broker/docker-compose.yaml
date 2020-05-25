@@ -1,0 +1,20 @@
+#docker network create -d bridge --subnet=10.10.1.10/16 --gateway=10.10.1.1 backend
+
+version: "3"
+
+services:
+  BROKER:
+    image: "elektro-broker"
+    container_name: "elektro-broker"
+    volumes:
+      - "./mosquitto/config/:/mosquitto/config"
+    ports:
+      - 1883:1883
+      - 1884:1884
+    networks:
+      - rede
+
+networks:
+  rede:
+    external:
+      name: elektro-network
